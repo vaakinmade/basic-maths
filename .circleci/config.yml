@@ -61,6 +61,10 @@ jobs:
           name: Compile the project
           # This assumes pytest is installed via the install-package step above
           command: python setup.py sdist bdist_wheel
+      - run:
+          name: Deploy to Test PyPI
+          # This assumes pytest is installed via the install-package step above
+          command: python -m twine upload -u PYPI_USERNAME -p PYPI_TOKEN --repository-url https://test.pypi.org/legacy/ dist/*
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -72,3 +76,7 @@ workflows:
       - deploy-staging:
           requires:
             - build-and-test
+          filters:
+            branches:
+              only:
+                - master
