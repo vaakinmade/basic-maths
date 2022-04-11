@@ -67,12 +67,12 @@ jobs:
             curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | sudo apt-key add -
             echo "deb https://packages.doppler.com/public/cli/deb/debian any-version main" | sudo tee /etc/apt/sources.list.d/doppler-cli.list
             sudo apt-get update && sudo apt-get install doppler
-            doppler --version
       - run:
           name: Deploy to Test PyPI
           command: |
             echo $PYPI_USERNAME
             echo $PYPI_TOKEN
+            doppler run --token $DOPPLER_TOKEN_STG bash staging-deployment.sh
 #            python -m twine upload -u $PYPI_USERNAME -p $PYPI_TOKEN --repository-url https://test.pypi.org/legacy/ dist/*
 
 # Invoke jobs via workflows
