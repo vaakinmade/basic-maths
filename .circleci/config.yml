@@ -59,7 +59,7 @@ jobs:
           # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
           name: Compile the project
-          command: python setup.py sdist bdist_wheel
+          command: python3 setup.py sdist bdist_wheel
       - run:
           name: Install doppler
           command: |
@@ -69,10 +69,7 @@ jobs:
             sudo apt-get update && sudo apt-get install doppler
       - run:
           name: Deploy to Test PyPI
-          command: |
-            echo $PYPI_USERNAME
-            echo $PYPI_TOKEN
-            doppler run --token $DOPPLER_TOKEN_STG bash staging-deployment.sh
+          command: doppler run --token $DOPPLER_TOKEN_PACKAGR_STG bash staging-deployment.sh
 
   deploy-prod:
     docker:
@@ -83,7 +80,7 @@ jobs:
           pkg-manager: pip
       - run:
           name: Compile the project
-          command: python setup.py sdist bdist_wheel
+          command: python3 setup.py sdist bdist_wheel
       - run:
           name: Install doppler
           command: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-install --no-package-manager
