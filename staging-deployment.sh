@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 -m twine upload -u $PYPI_USERNAME -p $PYPI_TOKEN --repository-url https://test.pypi.org/legacy/ dist/* --verbose
+python3 -m twine upload -u $PACKAGR_USERNAME -p $PACKAGR_TOKEN --repository-url https://api.packagr.app/vVJSgah4 dist/* --verbose
