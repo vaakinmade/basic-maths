@@ -68,8 +68,8 @@ jobs:
             echo "deb https://packages.doppler.com/public/cli/deb/debian any-version main" | sudo tee /etc/apt/sources.list.d/doppler-cli.list
             sudo apt-get update && sudo apt-get install doppler
       - run:
-          name: Deploy to Packagr
-          command: doppler run --token $DOPPLER_TOKEN_PACKAGR_STG bash staging-deployment.sh
+          name: Deploy to PyPI staging
+          command: doppler run --token $DOPPLER_TOKEN_STG bash staging-deployment.sh
 
   deploy-prod:
     docker:
@@ -84,9 +84,9 @@ jobs:
       - run:
           name: Install doppler
           command: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-install --no-package-manager
-#      - run:
-#          name: Deploy to PyPI
-#          command: ./doppler run --token $DOPPLER_TOKEN_PRD bash prd-deployment.sh
+      - run:
+          name: Deploy to PyPI
+          command: ./doppler run --token $DOPPLER_TOKEN_PRD bash prd-deployment.sh
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -101,11 +101,11 @@ workflows:
           filters:
             branches:
               only:
-                - master
-      - deploy-prod:
-          requires:
-            - deploy-staging
-          filters:
-            branches:
-              only:
-                - master
+                - develop
+#      - deploy-prod:
+#          requires:
+#            - deploy-staging
+#          filters:
+#            branches:
+#              only:
+#                - master
