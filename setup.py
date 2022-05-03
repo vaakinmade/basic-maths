@@ -12,7 +12,7 @@ with open(path.join(PWD, 'README.md'), encoding='utf-8') as f:
 # This call to setup() does all the work
 setup(
     name="basic-maths",
-    version="0.1.8",
+    version="0.1.11",
     description="Basic maths library for multiplication and division",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -31,7 +31,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Operating System :: OS Independent"
     ],
-    packages=find_packages(exclude=["tests"]),
+    packages=find_packages(exclude=["*tests*"]),
     include_package_data=True,
     install_requires=["numpy"]
 )
