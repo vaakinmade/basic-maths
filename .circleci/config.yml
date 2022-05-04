@@ -110,6 +110,7 @@ workflows:
               only:
                 - develop
       - deploy-prod:
+#          type: approval
           requires:
             - build-and-test
           filters:
