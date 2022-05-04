@@ -93,7 +93,7 @@ jobs:
           name: Install doppler
           command: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-install --no-package-manager
       - run:
-          name: Deploy to PyPI production environment
+          name: Deploy to PyPI prod environment
           command: ./doppler run --token $DOPPLER_TOKEN_PRD bash prd-deployment.sh
 
 # Invoke jobs via workflows
