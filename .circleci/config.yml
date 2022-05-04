@@ -101,15 +101,11 @@ workflows:
     jobs:
       - build-and-test
       - deploy-staging:
-          requires:
-            - build-and-test
           filters:
             branches:
               only:
                 - develop
       - deploy-prod:
-          requires:
-            - build-and-test
           filters:
             branches:
               only:
