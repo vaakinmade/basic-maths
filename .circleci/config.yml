@@ -71,10 +71,11 @@ jobs:
 #          name: Deploy to PyPI staging environment
 #          command: doppler run --token $DOPPLER_TOKEN_STG bash staging-deployment.sh
       - run:
-          name: Trigger deployment to PYPI prod
+          name: Merge develop into main and trigger deploy-prod job
           command: |
             git config user.email "camera@ecobee.com"
             git config user.name "CI User"
+            echo "Merging develop into main..."
             git checkout main
             git pull origin develop -Xtheirs --no-commit && git commit -m "Merged develop into master"
   deploy-prod:
@@ -108,10 +109,10 @@ workflows:
             branches:
               only:
                 - develop
-#      - deploy-prod:
-#          requires:
-#            - build-and-test
-#          filters:
-#            branches:
-#              only:
-#                - main
+      - deploy-prod:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only:
+                - main
