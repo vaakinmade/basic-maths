@@ -77,9 +77,8 @@ jobs:
             git config user.name "CI User"
             git checkout develop
             git branch -D main
-            git checkout -b main
-            git merge --squash develop && git commit
-
+            git checkout --track origin/main
+            git merge --squash origin/develop && git commit
   deploy-prod:
     docker:
       - image: cimg/python:3.8.9
