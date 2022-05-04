@@ -79,7 +79,7 @@ jobs:
             git checkout main
             git pull origin develop -Xtheirs --no-commit && git commit -m "Merged origin/develop into local main"
             git pull origin main -Xours --no-commit && git commit -m "Merged origin/main into local main to avoid conflicts"
-            git push
+            git push origin main
   deploy-prod:
     docker:
       - image: cimg/python:3.8.9
