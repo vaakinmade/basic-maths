@@ -12,7 +12,7 @@ with open(path.join(PWD, 'README.md'), encoding='utf-8') as f:
 # This call to setup() does all the work
 setup(
     name="basic-maths",
-    version="0.1.19",
+    version="0.1.20",
     description="Basic maths library for multiplication and division",
     long_description=long_description,
     long_description_content_type="text/markdown",
