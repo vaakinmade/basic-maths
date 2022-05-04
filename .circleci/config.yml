@@ -76,7 +76,7 @@ jobs:
             git config user.email "camera@ecobee.com" && git config user.name "CI User"
             echo "Merging develop into main..."
             git checkout main && git pull origin main
-            git pull origin develop -Xtheirs --no-commit && git commit -m "Merged origin/develop into local main"
+            git pull origin develop -Xtheirs --no-commit && git commit -m "Merged origin/develop into local main."
             git push origin main
   deploy-prod:
     docker:
