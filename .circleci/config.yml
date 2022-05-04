@@ -110,15 +110,6 @@ workflows:
             branches:
               only:
                 - develop
-<<<<<<< HEAD
-      - deploy-prod:
-          requires:
-            - build-and-test
-          filters:
-            branches:
-              only:
-                - main
-=======
 #      - deploy-prod:
 #          requires:
 #            - build-and-test
@@ -126,4 +117,3 @@ workflows:
 #            branches:
 #              only:
 #                - main
->>>>>>> origin/develop
