@@ -71,14 +71,15 @@ jobs:
 #          name: Deploy to PyPI staging environment
 #          command: doppler run --token $DOPPLER_TOKEN_STG bash staging-deployment.sh
       - run:
-          name: Trigger deployment to PYPI prod
+          name: Merge develop into main and trigger deploy-prod job
           command: |
             git config user.email "camera@ecobee.com"
             git config user.name "CI User"
-            git checkout develop
-            git branch -D main
-            git checkout --track origin/main
-            git pull origin develop
+            echo "Merging develop into main..."
+            git checkout main
+            git pull origin develop -Xtheirs --no-commit && git commit -m "Merged origin/develop into local main"
+            git pull origin main -Xours --no-commit && git commit -m "Merged origin/main into local main to avoid conflicts"
+            git push
   deploy-prod:
     docker:
       - image: cimg/python:3.8.9
@@ -93,7 +94,7 @@ jobs:
           name: Install doppler
           command: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-install --no-package-manager
       - run:
-          name: Deploy to PyPI production environment
+          name: Deploy to PyPI prod environment
           command: ./doppler run --token $DOPPLER_TOKEN_PRD bash prd-deployment.sh
 
 # Invoke jobs via workflows
@@ -110,10 +111,11 @@ workflows:
             branches:
               only:
                 - develop
-#      - deploy-prod:
-#          requires:
-#            - build-and-test
-#          filters:
-#            branches:
-#              only:
-#                - main
+      - deploy-prod:
+#          type: approval
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only:
+                - main
