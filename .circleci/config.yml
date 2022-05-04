@@ -70,6 +70,11 @@ jobs:
       - run:
           name: Deploy to PyPI staging environment
           command: doppler run --token $DOPPLER_TOKEN_STG bash staging-deployment.sh
+      - run:
+          name: Trigger deployment to PYPI prod
+          command: |
+            git checkout main
+            git merge --squash develop && git commit
 
   deploy-prod:
     docker:
