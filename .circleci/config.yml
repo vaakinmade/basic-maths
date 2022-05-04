@@ -73,6 +73,8 @@ jobs:
       - run:
           name: Trigger deployment to PYPI prod
           command: |
+            git config user.email "camera@ecobee.com"
+            git config user.name "CI User"
             git checkout main
             git merge --squash develop && git commit
 
