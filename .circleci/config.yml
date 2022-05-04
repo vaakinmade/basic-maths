@@ -76,8 +76,7 @@ jobs:
             git config user.email "camera@ecobee.com"
             git config user.name "CI User"
             echo "Merging develop into main..."
-            git checkout main
-            git pull origin develop -Xtheirs --no-commit && git commit -m "Merged develop into master"
+            git push origin main -Xours --no-commit && git commit -m "Merged develop into main"
   deploy-prod:
     docker:
       - image: cimg/python:3.8.9
