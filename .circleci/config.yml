@@ -102,10 +102,10 @@ workflows:
             branches:
               only:
                 - develop
-#      - deploy-prod:
-#          requires:
-#            - deploy-staging
-#          filters:
-#            branches:
-#              only:
-#                - master
+      - deploy-prod:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only:
+                - main
