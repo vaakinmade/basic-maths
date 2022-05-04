@@ -57,25 +57,28 @@ jobs:
           pkg-manager: pip
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
           # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
-      - run:
-          name: Compile the project
-          command: python3 setup.py sdist bdist_wheel
-      - run:
-          name: Install doppler
-          command: |
-            sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
-            curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | sudo apt-key add -
-            echo "deb https://packages.doppler.com/public/cli/deb/debian any-version main" | sudo tee /etc/apt/sources.list.d/doppler-cli.list
-            sudo apt-get update && sudo apt-get install doppler
-      - run:
-          name: Deploy to PyPI staging environment
-          command: doppler run --token $DOPPLER_TOKEN_STG bash staging-deployment.sh
+#      - run:
+#          name: Compile the project
+#          command: python3 setup.py sdist bdist_wheel
+#      - run:
+#          name: Install doppler
+#          command: |
+#            sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
+#            curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | sudo apt-key add -
+#            echo "deb https://packages.doppler.com/public/cli/deb/debian any-version main" | sudo tee /etc/apt/sources.list.d/doppler-cli.list
+#            sudo apt-get update && sudo apt-get install doppler
+#      - run:
+#          name: Deploy to PyPI staging environment
+#          command: doppler run --token $DOPPLER_TOKEN_STG bash staging-deployment.sh
       - run:
           name: Trigger deployment to PYPI prod
           command: |
-            git checkout main
-            git merge --squash develop && git commit
-
+            git config user.email "camera@ecobee.com"
+            git config user.name "CI User"
+            git checkout develop
+            git branch -D main
+            git checkout --track origin/main
+            git pull origin develop
   deploy-prod:
     docker:
       - image: cimg/python:3.8.9
@@ -107,10 +110,11 @@ workflows:
             branches:
               only:
                 - develop
-      - deploy-prod:
-          requires:
-            - build-and-test
-          filters:
-            branches:
-              only:
-                - main
+#      - deploy-prod:
+#          requires:
+#            - build-and-test
+#          filters:
+#            branches:
+#              only:
+#                - main
+>>>>>>> 51e739f2628c54c6b0ea968bd29e581d26cebb0c
