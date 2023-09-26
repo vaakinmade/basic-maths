@@ -1,4 +1,4 @@
-# Basic maths
+# Basic maths.
 
 A small demo library for multiplying and dividing numbers.
 
