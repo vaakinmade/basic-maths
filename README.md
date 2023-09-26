@@ -2,7 +2,7 @@
 
 A small demo library for multiplying and dividing numbers.
 
-### Installation
+### Installation.
 ```
 pip install basic-maths
 ```
